@@ -1,0 +1,25 @@
+{
+  "name": "atlas-server",
+  "version": "0.0.1",
+  "description": "Atlas Server",
+  "scripts": {
+    "start": "node server/app"
+  },
+  "author": {
+    "name": "Dallin Osmun",
+    "email": "dosmun@gmail.com",
+    "url": "https://github.com/numso"
+  },
+  "engines": {
+    "node": "0.10.*",
+    "npm": "1.2.*"
+  },
+  "dependencies": {
+    "config": "~0.4.36",
+    "express": "~3.10.5",
+    "q": "^1.0.1",
+    "rimraf": "^2.2.8",
+    "stylus": "~0.46.3",
+    "underscore": "~1.6.0"
+  }
+}

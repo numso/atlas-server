@@ -1,0 +1,13 @@
+<div>
+  <h2>Login Page</h2>
+  <div style="color:red">{{error}}</div>
+  <div>
+    <label>Username:</label>
+    <input type="text" ng-model="name">
+  </div>
+  <div>
+    <label>Password:</label>
+    <input type="password" ng-model="pass">
+  </div>
+  <button class="btn" ng-click="login(name, pass)">Login</button>
+</div>

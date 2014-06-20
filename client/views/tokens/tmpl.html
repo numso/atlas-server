@@ -1,0 +1,25 @@
+<div>
+  <h2>Tokens Page</h2>
+  <div style="color:red">{{error}}</div>
+  <button class="btn btn-info" ng-click="generateToken()">Generate New Token</button>
+  <table class="table">
+    <tr>
+      <th>Token</th>
+      <th>Expiry</th>
+      <th>Status</th>
+      <th>Invalidate</th>
+    </tr>
+    <tr ng-repeat="t in tokens">
+      <td>{{t.token}}</td>
+      <td>{{(t.expiry | date) || 'Never'}}</td>
+      <td>
+        <button class="btn btn-success" disabled ng-show="t.isValid">Valid</button>
+        <button class="btn btn-danger" disabled ng-show="!t.isValid">Invalid</button>
+      </td>
+      <td>
+        <button class="btn btn-danger" ng-show="t.isValid" ng-click="invalidate(t.token, $index)">Invalidate</button>
+        <button class="btn btn-danger" ng-show="!t.isValid" ng-click="remove(t.token, $index)">Remove</button>
+      </td>
+    </tr>
+  </table>
+</div>
