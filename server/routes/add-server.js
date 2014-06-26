@@ -67,7 +67,7 @@ function stop(req, res) {
 }
 
 function list(req, res) {
-  servers.list(function (_servers) {
+  servers.list().then(function (_servers) {
     res.send({
       success: true,
       servers: _servers
