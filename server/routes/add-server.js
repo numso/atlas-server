@@ -3,13 +3,6 @@
 
 var cli = require('../utils/command-line.js');
 var servers = require('../utils/servers.js');
-// var TEST_BODY = {
-//   token: '84d1a702-80f7-c5c8-1a4c-b330634e4c8c',
-//   git: 'git@github.com:numso/antherion.com.git',
-//   domain: 'antherion.com',
-//   subdomain: 'testing',
-//   setupHooks: true
-// };
 
 module.exports = function (app) {
   app.post('/addServer', app.m.auth, add);
@@ -20,8 +13,29 @@ module.exports = function (app) {
 };
 
 function remove(req, res) {
-  // finish this function
-  // also start all "Started" servers on bootup
+  if (!req.body || !req.body.url) {
+    return res.fail('Must include url.');
+  }
+
+  var url = req.body.url;
+  servers.setState(url, 'Destroying');
+
+  cli.removeProject(url).then(function () {
+    return cli.removeNginxEntry(url);
+  }).then(function () {
+    return cli.reloadNginx();
+  }).then(function () {
+    return cli.foreverStop(url);
+  }).then(function () {
+    return cli.removeInfo(url);
+  }).then(function () {
+    res.send({
+      success: true,
+      msg: 'Server ' + url + ' has been successfully removed.'
+    });
+  }).fail(function (err) {
+    res.fail(err);
+  });
 }
 
 function start(req, res) {
@@ -29,7 +43,7 @@ function start(req, res) {
     return res.fail('Must include url.');
   }
   var url = req.body.url;
-  servers.get().then(function (server) {
+  servers.get(url).then(function (server) {
     if (!server) return res.fail('no server with that domain');
     if (server.state === 'Running') return res.fail('server already running');
     cli.foreverStart(url, server.port);
@@ -43,7 +57,7 @@ function stop(req, res) {
     return res.fail('Must include url.');
   }
   var url = req.body.url;
-  servers.get().then(function (server) {
+  servers.get(url).then(function (server) {
     if (!server) return res.fail('no server with that domain');
     if (server.state === 'Stopped') return res.fail('server already stopped');
     cli.foreverStop(url);
