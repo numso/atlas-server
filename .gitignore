@@ -1,5 +1,6 @@
 node_modules
 config/runtime.json
 config/localdev.js
+config/production.js
 .DS_Store
 client/css/app.css
