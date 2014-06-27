@@ -1,6 +1,10 @@
 node_modules
+
 config/runtime.json
 config/localdev.js
 config/production.js
+
 .DS_Store
+npm-debug.log
+
 client/css/app.css
