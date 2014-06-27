@@ -13,5 +13,6 @@ module.exports = {
     pass: 'admin'
   },
   project_dir: '/opt/nodejs/',
-  nginx_dir: '/etc/nginx/conf.d/'
+  nginx_dir: '/etc/nginx/conf.d/',
+  nginx_bin: '/usr/sbin/nginx'
 };

@@ -123,7 +123,7 @@ function foreverStop(url) {
 }
 
 function reloadNginx() {
-  return _runCmd('nginx', ['-s', 'reload'], {}, 'nginx reload');
+  return _runCmd(config.nginxBin, ['-s', 'reload'], {}, 'nginx reload');
 }
 
 // --- Private Functions -------------------------------------------------------
