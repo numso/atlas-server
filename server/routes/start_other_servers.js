@@ -13,7 +13,7 @@ module.exports = function () {
 function startServers() {
   servers.list().then(function (_servers) {
     _.each(_servers, function (server) {
-      if (servers.state === 'Running') {
+      if (server.state === 'Running') {
         start(server.url);
       }
     });
