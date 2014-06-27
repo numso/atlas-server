@@ -137,7 +137,9 @@ function _runCmd(cmd, args, opts, id) {
   proc.on('error', output);
 
   proc.on('close', function (code) {
-    if (code === 0) deferred.resolve();
+    console.log(id + ' closing');
+    console.log(arguments);
+    if (code === 0 || code === null) deferred.resolve();
     else deferred.reject(id + ' exited with code ' + code);
   });
 

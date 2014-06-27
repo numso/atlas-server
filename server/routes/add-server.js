@@ -10,6 +10,8 @@ module.exports = function (app) {
   app.post('/listServers', app.m.auth, list);
   app.post('/startServer', app.m.auth, start);
   app.post('/stopServer', app.m.auth, stop);
+
+  app.post('/removeInfo', app.m.auth, removeInfo);
 };
 
 function remove(req, res) {
@@ -38,6 +40,17 @@ function remove(req, res) {
   });
 }
 
+function removeInfo(req, res) {
+  if (!req.body || !req.body.url) {
+    return res.fail('Must include url.');
+  }
+  cli.removeInfo(req.body.url).then(function () {
+    res.success();
+  }, function (err) {
+    res.fail(err);
+  });
+}
+
 function start(req, res) {
   if (!req.body || !req.body.url) {
     return res.fail('Must include url.');
@@ -46,9 +59,12 @@ function start(req, res) {
   servers.get(url).then(function (server) {
     if (!server) return res.fail('no server with that domain');
     if (server.state === 'Running') return res.fail('server already running');
-    cli.foreverStart(url, server.port);
     servers.setState(url, 'Running');
-    res.success();
+    cli.foreverStart(url, server.port).then(function () {
+      res.success();
+    }, function (err) {
+      res.fail(err);
+    });
   });
 }
 
@@ -60,9 +76,12 @@ function stop(req, res) {
   servers.get(url).then(function (server) {
     if (!server) return res.fail('no server with that domain');
     if (server.state === 'Stopped') return res.fail('server already stopped');
-    cli.foreverStop(url);
     servers.setState(url, 'Stopped');
-    res.success();
+    cli.foreverStop(url).then(function () {
+      res.success();
+    }, function (err) {
+      res.fail(err);
+    });
   });
 }
 
