@@ -14,5 +14,6 @@ module.exports = {
   },
   project_dir: '/opt/nodejs/',
   nginx_dir: '/etc/nginx/conf.d/',
-  nginx_bin: '/usr/sbin/nginx'
+  nginx_bin: '/usr/sbin/nginx',
+  forever_bin: '/usr/local/bin/forever'
 };
