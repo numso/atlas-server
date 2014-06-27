@@ -13,7 +13,9 @@ module.exports = function () {
 function startServers() {
   servers.list().then(function (_servers) {
     _.each(_servers, function (server) {
-      start(server.url);
+      if (servers.state === 'Running') {
+        start(server.url);
+      }
     });
   });
 }

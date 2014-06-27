@@ -113,15 +113,12 @@ function removeNginxEntry(url) {
 
 function foreverStart(url, port) {
   var path = config.project_dir + url;
-  console.log(url);
   process.env.PORT = port;
   return _runCmd(config.forever_bin, ['start', '-a', '--uid', url, '-c', 'npm start', './'], { cwd: path, env: process.env }, 'forever start');
 }
 
 function foreverStop(url) {
-  var path = config.project_dir + url;
-  console.log(url);
-  return _runCmd(config.forever_bin, ['stop', url], { cwd: path }, 'forever stop');
+  return _runCmd(config.forever_bin, ['stop', url], {}, 'forever stop');
 }
 
 function reloadNginx() {
